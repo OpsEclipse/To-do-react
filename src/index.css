@@ -205,3 +205,9 @@ button{
   font-size: 40px;
   border-radius: 10px;
 }
+
+footer{
+  position:relative;
+  margin: auto;
+  bottom: 0;
+}

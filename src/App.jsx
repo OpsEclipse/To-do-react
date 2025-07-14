@@ -5,6 +5,8 @@ import { ListOfTasks } from "./components/ListOfTasks.jsx";
 import { DateDisplay } from "./components/Date.jsx";
 import { ProgressSection } from './components/ProgressSection.jsx';
 import { AddTaskSec } from './components/AddTask.jsx';
+import { Footer } from './components/Footer.jsx';
+
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -19,6 +21,7 @@ function App() {
           </div>
         </div>
         <ListOfTasks tasks={tasks} setTasks = {setTasks}/>
+        <Footer />
       </div>
     </main>
   );
