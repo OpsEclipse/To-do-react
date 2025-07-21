@@ -40,6 +40,7 @@ main {
 }
 
 .app {
+  margin-top: 50px;
   background-color: var(--background-color);
   min-height: 700px;
   width: fit-content;
