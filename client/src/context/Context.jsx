@@ -70,27 +70,26 @@ export const ContextProvider = (props) => {
 	};
 
 
-    const removeTask = async (task, index) => {
+   const removeTask = async (task, index) => {
 		try {
 			setLoading(true);
 
-			setTasks((prev) => {
-			
-
-			// Wait for the task to be deleted in the DB
+			// Wait for the task to be deleted in the DB first
 			await axios.delete(`${path}${task._id}`);
 
 			// After deletion succeeds, update local state
-			const newTasks = [...prev];
-			newTasks.splice(index, 1);
-			return newTasks;
-		});
+			setTasks((prev) => {
+				const newTasks = [...prev];
+				newTasks.splice(index, 1);
+				return newTasks;
+			});
 		} catch (error) {
 			console.error('Failed to delete task:', error);
 		} finally {
 			setLoading(false);
 		}
-	};
+   };
+
 
     
     const contextValue = {
