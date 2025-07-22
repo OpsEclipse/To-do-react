@@ -51,7 +51,7 @@ export const ContextProvider = (props) => {
 				completed: !newTasks[index].completed,
 			};
 			console.log(newTasks[index].completed);
-			axios.patch(path, task:_id, {
+			axios.patch(path.concat(task._id), {
 				isCompleted: !task.completed,
 			});
 
@@ -64,7 +64,7 @@ export const ContextProvider = (props) => {
 			const newTasks = [...prev];
 			newTasks.splice(index, 1);
 
-			axios.delete(path, task._id);
+			axios.delete(path.concat(task._id));
 
 			return newTasks;
 		});
