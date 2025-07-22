@@ -18,12 +18,15 @@ function App() {
 	return (
 		<main>
 			<div className="app">
+<<<<<<< HEAD
 				<button
 					style={{ width: 'fit-content', margin: '5px' }}
 					onClick={getTasksFromDB}
 				>
 					Restart
 				</button>
+=======
+>>>>>>> 274ac64648accd285db841cc6438746a31556214
 				<div className="topHalf">
 					<DateDisplay />
 					<div
