@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import axios from "axios";
 export const Context = createContext();
-const path = 'https://to-do-react-m3fc.onrender.com/task'
+const path = 'https://to-do-react-m3fc.onrender.com/task/'
 
 export const ContextProvider = (props) => {
     const [tasks, setTasks] = useState([]);
