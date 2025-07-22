@@ -49,7 +49,7 @@ export const ContextProvider = (props) => {
 			setLoading(true);
 
 			// Send update to backend
-			await axios.patch(`${path}/${task._id}`, {
+			await axios.patch(`${path}${task._id}`, {
 				isCompleted: !task.completed,
 			});
 
@@ -75,16 +75,16 @@ export const ContextProvider = (props) => {
 			setLoading(true);
 
 			setTasks((prev) => {
-				const newTasks = [...prev];
-				newTasks.splice(index, 1);
-				return newTasks;
-			});
+			
 
 			// Wait for the task to be deleted in the DB
-			await axios.delete(`${path}/${task._id}`);
+			await axios.delete(`${path}${task._id}`);
 
 			// After deletion succeeds, update local state
-			
+			const newTasks = [...prev];
+			newTasks.splice(index, 1);
+			return newTasks;
+		});
 		} catch (error) {
 			console.error('Failed to delete task:', error);
 		} finally {
