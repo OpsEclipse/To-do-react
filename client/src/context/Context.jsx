@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import axios from "axios";
 export const Context = createContext();
+const path = 'https://to-do-react-m3fc.onrender.com/task'
 
 export const ContextProvider = (props) => {
     const [tasks, setTasks] = useState([]);
@@ -8,7 +9,7 @@ export const ContextProvider = (props) => {
 
     const getTasksFromDB = () => {
 		axios
-			.get('http://localhost:8080/task/')
+			.get(path)
 			.then((res) => {
 				let taskList = res.data.map((task) => ({
 					text: task.taskName,
@@ -36,7 +37,7 @@ export const ContextProvider = (props) => {
 	};
 
 	const addTaskToDB = async (data) => {
-		let res = await axios.post('http://localhost:8080/task/', {
+		let res = await axios.post(path, {
 			taskName: data.text,
 		});
 		return res.data.insertedId;
@@ -50,7 +51,7 @@ export const ContextProvider = (props) => {
 				completed: !newTasks[index].completed,
 			};
 			console.log(newTasks[index].completed);
-			axios.patch(`http://localhost:8080/task/${task._id}`, {
+			axios.patch(path, task:_id, {
 				isCompleted: !task.completed,
 			});
 
@@ -63,7 +64,7 @@ export const ContextProvider = (props) => {
 			const newTasks = [...prev];
 			newTasks.splice(index, 1);
 
-			axios.delete(`http://localhost:8080/task/${task._id}`);
+			axios.delete(path, task._id);
 
 			return newTasks;
 		});
