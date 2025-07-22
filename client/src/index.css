@@ -62,9 +62,10 @@ main {
   position: relative;
   flex-direction: row;
   align-items: center;
-  gap: 20px;
   margin-bottom: 10px;
   cursor: pointer;
+  justify-content: space-between;
+  padding-right: 30px;
 }
 
 .task-text{

@@ -1,6 +1,9 @@
 import "../index.css";
 export const Footer = () => {
     return (
-        <footer>All rights reserved to Sparsh Shah</footer>
-    )
+		<footer>
+			&copy; {new Date().getFullYear()}  Sparsh Shah. All rights
+			reserved.
+		</footer>
+	);
 }

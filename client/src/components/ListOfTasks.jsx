@@ -1,20 +1,19 @@
-import {ListItem} from "./ListItem.jsx"
-import "../index.css";
+import { ListItem } from './ListItem.jsx';
+import '../index.css';
+import { useContext } from 'react';
+import { Context } from '../Context/context.jsx';
 
-
-export const ListOfTasks = ({tasks, setTasks}) => {
-    
-    return(
-        <ul>
-            {tasks.map((task, index) => (
-                <ListItem 
-                    key={index}
-                    task={task}
-                    index={index}
-                    setTasks={setTasks}
-                />
-            ))}
-
-        </ul>
-    );
-}
+export const ListOfTasks = () => {
+	const { tasks } = useContext(Context);
+	return (
+		<ul>
+			{tasks.map((task, index) => (
+				<ListItem
+					key={task._id}
+					task={task}
+					index={index}
+				/>
+			))}
+		</ul>
+	);
+};

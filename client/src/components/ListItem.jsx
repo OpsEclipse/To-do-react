@@ -1,18 +1,37 @@
-import "../index.css";
-import leavesImg from "../assets/leaves.png";
+import '../index.css';
+import leavesImg from '../assets/leaves.png';
+import { useContext } from 'react';
+import { Context } from '../Context/context';
 
-export const ListItem = ({task, index ,setTasks}) => {
-    return (
-        <div className="listItem" onClick={() => {
-            setTasks(prev => {
-                const newTasks = [...prev];
-                newTasks[index] = {...newTasks[index], completed: !newTasks[index].completed}
-                console.log(newTasks[index].completed)
-                return newTasks;
-            })
-        }}>
-            <img src={leavesImg} alt="leaves" className="leafIcon"/>
-            <p className={`task-text ${task.completed ? 'completed' : ''}`}>{task.text}</p>
-        </div>
-    );
+export const ListItem = ({ task, index }) => {
+	const {removeTask, completeTask} = useContext(Context);
+
+	
+	return (
+		<div className="listItem">
+			<div
+				style={{ display: 'flex', gap: '20px' }}
+				onClick={() => completeTask(index, task)}
+			>
+				<img
+					src={leavesImg}
+					alt="leaves"
+					className="leafIcon"
+				/>
+				<p
+					className={`task-text ${
+						task.completed ? 'completed' : ''
+					}`}
+				>
+					{task.text}
+				</p>
+			</div>
+			<p
+				onClick={() => removeTask(task, index)}
+				style={{ padding: '4px' }}
+			>
+				x
+			</p>
+		</div>
+	);
 };
