@@ -6,6 +6,7 @@ import { Context } from '../context/Context';
 export const ListItem = ({ task, index }) => {
 	const { removeTask, completeTask, loading } = useContext(Context);
 
+	if (loading === task._id) return null;
 	return (
 		<div className="listItem">
 			<div
@@ -17,15 +18,13 @@ export const ListItem = ({ task, index }) => {
 					alt="leaves"
 					className="leafIcon"
 				/>
-				{loading !== task._id ? (
-					<p
-						className={`task-text ${
-							task.completed ? 'completed' : ''
-						}`}
-					>
-						{task.text}
-					</p>
-				) : null}
+				<p
+					className={`task-text ${
+						task.completed ? 'completed' : ''
+					}`}
+				>
+					{task.text}
+				</p>
 			</div>
 			<p
 				onClick={() => removeTask(task, index)}
