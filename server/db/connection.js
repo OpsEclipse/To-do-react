@@ -1,25 +1,28 @@
-import { MongoClient, ServerApiVersion } from 'mongodb'
+import { MongoClient, ServerApiVersion } from 'mongodb';
+
 const uri = process.env.ATLAS_URI || '';
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+
+// Create a MongoClient with Stable API version and TLS enabled
 const client = new MongoClient(uri, {
+	tls: true, // <-- TLS enabled here at top-level options
 	serverApi: {
 		version: ServerApiVersion.v1,
 		strict: true,
 		deprecationErrors: true,
-		tls:true,
 	},
 });
 
 export let db;
 
 export const connectToDB = async () => {
-    if (db) return db;
+	if (db) return db;
 	await client.connect();
 	await client.db('admin').command({ ping: 1 });
 	console.log(
 		'Pinged your deployment. You successfully connected to MongoDB!'
 	);
-	db = await client.db('task_manager');
+	db = client.db('task_manager');
+	return db;
 };
 
 process.on('SIGINT', async () => {
