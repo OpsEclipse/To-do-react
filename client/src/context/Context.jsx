@@ -7,6 +7,7 @@ export const ContextProvider = (props) => {
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState('');
 	const [loading, setLoading] = useState('');
+	const [serverOff, setServerOff] = useState(false);
 
     const getTasksFromDB = () => {
 		axios
@@ -18,12 +19,14 @@ export const ContextProvider = (props) => {
 					_id: task._id,
 				}));
 				setTasks(taskList);
+				setServerOff(false);
 			})
 			.catch((err) => {
 				console.error(
 					'error fetching data from database',
 					err
 				);
+				setServerOff(true)
 			});
 	};
 
@@ -100,6 +103,7 @@ export const ContextProvider = (props) => {
         completeTask,
 		loading,
 		setLoading,
+		serverOff,
 	};
     return (
 		<Context.Provider value={contextValue}>

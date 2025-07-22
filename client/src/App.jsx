@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { Context } from './context/Context.jsx';
 
 function App() {
-	const { getTasksFromDB, loading } = useContext(Context);
+	const { getTasksFromDB, serverOff } = useContext(Context);
 
 	useEffect(() => {
 		getTasksFromDB();
@@ -18,7 +18,12 @@ function App() {
 	return (
 		<main>
 			<div className="app">
-				<button style = {{"width" : "fit-content", 'margin' : '5px'}} onClick={getTasksFromDB}>Restart</button>
+				<button
+					style={{ width: 'fit-content', margin: '5px' }}
+					onClick={getTasksFromDB}
+				>
+					Restart
+				</button>
 				<div className="topHalf">
 					<DateDisplay />
 					<div
@@ -31,8 +36,12 @@ function App() {
 						<AddTaskSec />
 					</div>
 				</div>
-				<ListOfTasks />
-				
+				{serverOff ? (
+					<ListOfTasks />
+				) : (
+					<h2>Try again later, server off</h2>
+				)}
+
 				<Footer />
 			</div>
 		</main>
