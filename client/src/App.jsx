@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { Context } from './context/Context.jsx';
 
 function App() {
-	const { getTasksFromDB } = useContext(Context);
+	const { getTasksFromDB, loading } = useContext(Context);
 
 	useEffect(() => {
 		getTasksFromDB();
@@ -31,7 +31,8 @@ function App() {
 						<AddTaskSec />
 					</div>
 				</div>
-				<ListOfTasks />
+				{loading ? <ListOfTasks /> : null}
+				
 				<Footer />
 			</div>
 		</main>

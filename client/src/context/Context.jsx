@@ -6,6 +6,7 @@ const path = 'https://to-do-react-m3fc.onrender.com/task/'
 export const ContextProvider = (props) => {
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState('');
+	const [loading, setLoading] = useState(false);
 
     const getTasksFromDB = () => {
 		axios
@@ -43,32 +44,54 @@ export const ContextProvider = (props) => {
 		return res.data.insertedId;
 	};
 
-    const completeTask = (index, task) => {
-		setTasks((prev) => {
-			const newTasks = [...prev];
-			newTasks[index] = {
-				...newTasks[index],
-				completed: !newTasks[index].completed,
-			};
-			console.log(newTasks[index].completed);
-			axios.patch(`${path}${task._id}`, {
+    const completeTask = async (index, task) => {
+		try {
+			setLoading(true);
+
+			// Send update to backend
+			await axios.patch(`${path}/${task._id}`, {
 				isCompleted: !task.completed,
 			});
 
-			return newTasks;
-		});
+			// Once backend confirms, update local state
+			setTasks((prev) => {
+				const newTasks = [...prev];
+				newTasks[index] = {
+					...newTasks[index],
+					completed: !newTasks[index].completed,
+				};
+				return newTasks;
+			});
+		} catch (error) {
+			console.error('Failed to update task completion:', error);
+		} finally {
+			setLoading(false);
+		}
 	};
 
-    const removeTask = (task, index) => {
-		setTasks((prev) => {
-			const newTasks = [...prev];
-			newTasks.splice(index, 1);
 
-			axios.delete(`${path}${task._id}`);
+    const removeTask = async (task, index) => {
+		try {
+			setLoading(true);
 
-			return newTasks;
-		});
+			setTasks((prev) => {
+				const newTasks = [...prev];
+				newTasks.splice(index, 1);
+				return newTasks;
+			});
+
+			// Wait for the task to be deleted in the DB
+			await axios.delete(`${path}/${task._id}`);
+
+			// After deletion succeeds, update local state
+			
+		} catch (error) {
+			console.error('Failed to delete task:', error);
+		} finally {
+			setLoading(false);
+		}
 	};
+
     
     const contextValue = {
 		tasks,
@@ -80,6 +103,8 @@ export const ContextProvider = (props) => {
         newTask,
         setNewTask,
         completeTask,
+		loading,
+		setLoading,
 	};
     return (
 		<Context.Provider value={contextValue}>
