@@ -46,7 +46,7 @@ main {
   width: fit-content;
   display: flex;
   flex-direction: column;
-  padding: 50px;
+  padding: 20px;
   border-radius: 20px;
   border: var(--foreground-color) 4px solid;
 }

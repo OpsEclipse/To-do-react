@@ -19,7 +19,7 @@ function App() {
 	return (
 		<main>
 			<div className="app">
-				<button onClick={getTasksFromDB}>Restart</button>
+				<button style = {{"width" : "fit-content", 'margin' : '5px'}} onClick={getTasksFromDB}>Restart</button>
 				<div className="topHalf">
 					<DateDisplay />
 					<div
