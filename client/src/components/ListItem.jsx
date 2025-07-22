@@ -4,9 +4,8 @@ import { useContext } from 'react';
 import { Context } from '../context/Context';
 
 export const ListItem = ({ task, index }) => {
-	const {removeTask, completeTask} = useContext(Context);
+	const { removeTask, completeTask, loading } = useContext(Context);
 
-	
 	return (
 		<div className="listItem">
 			<div
@@ -18,13 +17,15 @@ export const ListItem = ({ task, index }) => {
 					alt="leaves"
 					className="leafIcon"
 				/>
-				<p
-					className={`task-text ${
-						task.completed ? 'completed' : ''
-					}`}
-				>
-					{task.text}
-				</p>
+				{loading !== task._id ? (
+					<p
+						className={`task-text ${
+							task.completed ? 'completed' : ''
+						}`}
+					>
+						{task.text}
+					</p>
+				) : null}
 			</div>
 			<p
 				onClick={() => removeTask(task, index)}

@@ -31,7 +31,7 @@ function App() {
 						<AddTaskSec />
 					</div>
 				</div>
-				{loading ? null : <ListOfTasks />}
+				<ListOfTasks />
 				
 				<Footer />
 			</div>

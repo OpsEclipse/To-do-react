@@ -6,7 +6,7 @@ const path = 'https://to-do-react-m3fc.onrender.com/task/'
 export const ContextProvider = (props) => {
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState('');
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState('');
 
     const getTasksFromDB = () => {
 		axios
@@ -46,8 +46,6 @@ export const ContextProvider = (props) => {
 
     const completeTask = async (index, task) => {
 		try {
-			setLoading(true);
-
 			// Send update to backend
 			await axios.patch(`${path}${task._id}`, {
 				isCompleted: !task.completed,
@@ -64,15 +62,13 @@ export const ContextProvider = (props) => {
 			});
 		} catch (error) {
 			console.error('Failed to update task completion:', error);
-		} finally {
-			setLoading(false);
 		}
 	};
 
 
    const removeTask = async (task, index) => {
 		try {
-			setLoading(true);
+			setLoading(task._id);
 
 			// Wait for the task to be deleted in the DB first
 			await axios.delete(`${path}${task._id}`);
@@ -86,7 +82,7 @@ export const ContextProvider = (props) => {
 		} catch (error) {
 			console.error('Failed to delete task:', error);
 		} finally {
-			setLoading(false);
+			setLoading('');
 		}
    };
 
