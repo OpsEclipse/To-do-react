@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import '../index.css';
 import { ProgressBar } from './ProgressBar';
-import { Context } from '../Context/context';
+import { Context } from '../context/Context';
 
 export const ProgressSection = () => {
 	const { tasks } = useContext(Context);

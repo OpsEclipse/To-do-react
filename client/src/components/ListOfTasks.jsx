@@ -1,7 +1,7 @@
 import { ListItem } from './ListItem.jsx';
 import '../index.css';
 import { useContext } from 'react';
-import { Context } from '../Context/context.jsx';
+import { Context } from '../context/Context.jsx';
 
 export const ListOfTasks = () => {
 	const { tasks } = useContext(Context);

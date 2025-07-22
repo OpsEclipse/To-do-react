@@ -1,7 +1,7 @@
 import '../index.css';
 import leavesImg from '../assets/leaves.png';
 import { useContext } from 'react';
-import { Context } from '../Context/context';
+import { Context } from '../context/Context';
 
 export const ListItem = ({ task, index }) => {
 	const {removeTask, completeTask} = useContext(Context);

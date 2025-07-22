@@ -1,4 +1,4 @@
-import { Context } from '../Context/context';
+import { Context } from '../context/Context';
 import '../index.css';
 import { useContext } from 'react';
 
