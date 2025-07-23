@@ -13,7 +13,7 @@ function App() {
 
 	useEffect(() => {
 		getTasksFromDB();
-	});
+	}, [getTasksFromDB]);
 
 	return (
 		<main>
@@ -24,7 +24,6 @@ function App() {
 				>
 					Restart
 				</button>
-48accd285db841cc6438746a31556214
 				<div className="topHalf">
 					<DateDisplay />
 					<div
