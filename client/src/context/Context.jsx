@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 import axios from "axios";
 export const Context = createContext();
 const path = 'https://to-do-react-m3fc.onrender.com/task/'
@@ -9,7 +9,7 @@ export const ContextProvider = (props) => {
 	const [loading, setLoading] = useState('');
 	const [serverOff, setServerOff] = useState(false);
 
-    const getTasksFromDB = () => {
+    const getTasksFromDB = useCallback(() => {
 		axios
 			.get(path)
 			.then((res) => {
@@ -28,7 +28,7 @@ export const ContextProvider = (props) => {
 				);
 				setServerOff(true)
 			});
-	};
+	}, []);
 
 
     const appendTask = async () => {
