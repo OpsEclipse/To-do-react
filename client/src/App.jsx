@@ -36,7 +36,7 @@ function App() {
 						<AddTaskSec />
 					</div>
 				</div>
-				{serverOff ? (
+				{!serverOff ? (
 					<ListOfTasks />
 				) : (
 					<h2>Try again later, server off</h2>
