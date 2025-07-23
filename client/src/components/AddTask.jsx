@@ -22,7 +22,7 @@ export const AddTaskSec = () => {
 				/>
 			</div>
 
-			<button onClick={appendTask}>+</button>
+			<button className = "addbtn" onClick={appendTask}>+</button>
 		</div>
 	);
 };
