@@ -13,7 +13,7 @@ route.get('/', async (req, res) => {
 	const result = await collection.findOne(userInfo);
 
 	if (result && await bcrypt.compare(password, result.password)) {
-		res.status(200).send(result.password);
+		res.status(200).send(result);
 	} else {
 		res.status(404).send('user not found');
 	}
