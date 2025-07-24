@@ -183,16 +183,21 @@ ul {
   gap:20px;
 }
 
-.searchBar{
+.textInput {
   width: 80%;
   height: 100%;
-  border-radius: 30px;
   background-color: var(--white);
   display: flex;
   padding-left: 20px;
-  
-}
+  box-shadow:
+    2px 2px 0 var(--button-color),
+    4px 4px 0 var(--foreground-color);
 
+  outline: none;
+}
+.login.app {
+  padding: 80px;
+}
 .search{
   background-color: transparent;
   border: none;
@@ -215,13 +220,71 @@ button{
   background-color: var(--button-color);
   color: var(--white);
   font-size: 40px;
-  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+  padding: 0 20px;
+}
+button:hover{
+  opacity: 0.9;
+  cursor: pointer;
+  padding: 0 30px;
 }
 
 footer{
   position:relative;
   margin: auto;
   bottom: 0;
+}
+
+.error{
+  color: red;
+  font-size: 14px;
+  margin: 0;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  height: fit-content;
+  background-color: var(--white);
+  max-height: 720px;
+  max-width: 580px;
+  gap: 40px;
+  padding: 40px;
+  align-items: center;
+  border-radius: 20px;
+}
+.login.textInput{
+  padding: 0;
+  width: 100%;
+  height: 40px;
+  background-color: #C8C9B1;
+  margin: 0 20px 0 20px;
+}
+.login h1{
+  margin-top: 20px;
+}
+.loginHeading{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.loginHeading img{
+  margin: 24px 0 0 0;
+  width: 26px;
+  height: 26px;
+}
+.login-container input {
+  padding: 0;
+  background-color: transparent;
+  padding: 20px;
+  
+}
+.submit-btn{
+  width: fit-content;
+  margin: 10px;
 }
 
 @media screen and (max-width: 600px) {

@@ -1,50 +1,25 @@
-import './index.css';
-import { useContext } from 'react';
-import { ListOfTasks } from './components/ListOfTasks.jsx';
-import { DateDisplay } from './components/Date.jsx';
-import { ProgressSection } from './components/ProgressSection.jsx';
-import { AddTaskSec } from './components/AddTask.jsx';
-import { Footer } from './components/Footer.jsx';
-import { useEffect } from 'react';
-import { Context } from './context/Context.jsx';
+import { Task } from './pages/to-do';
+import { Login } from './pages/login';
+import "./index.css"
+import {
+	HashRouter as Router,
+	Routes,
+	Route,
+	Navigate,
+} from 'react-router-dom';
 
 function App() {
-	const { getTasksFromDB, serverOff } = useContext(Context);
-
-	useEffect(() => {
-		getTasksFromDB();
-	}, [getTasksFromDB]);
-
 	return (
-		<main>
-			<div className="app">
-				<button
-					style={{ width: 'fit-content', margin: '5px' }}
-					onClick={getTasksFromDB}
-				>
-					Restart
-				</button>
-				<div className="topHalf">
-					<DateDisplay />
-					<div
-						style={{
-							display: 'flex',
-							flexDirection: 'column',
-						}}
-					>
-						<ProgressSection />
-						<AddTaskSec />
-					</div>
-				</div>
-				{!serverOff ? (
-					<ListOfTasks />
-				) : (
-					<h2>Try again later, server off</h2>
-				)}
-
-				<Footer />
-			</div>
-		</main>
+		<Router>
+			<Routes>
+				<Route
+					path="/"
+					element={<Navigate to="/login" replace />}
+				/>
+				<Route path="/login" element={<Login />} />
+				<Route path="/app" element={<Task />} />
+			</Routes>
+		</Router>
 	);
 }
 

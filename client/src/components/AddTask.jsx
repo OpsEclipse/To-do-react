@@ -3,11 +3,12 @@ import '../index.css';
 import { useContext } from 'react';
 
 export const AddTaskSec = () => {
-	const { newTask, setNewTask, appendTask } = useContext(Context)
+	const { newTask, setNewTask, appendTask, displayName } =
+		useContext(Context);
 
 	return (
 		<div className="addTaskSec">
-			<div className="searchBar">
+			<div className="textInput">
 				<input
 					type="text"
 					className="search"
@@ -22,7 +23,7 @@ export const AddTaskSec = () => {
 				/>
 			</div>
 
-			<button className = "addbtn" onClick={appendTask}>+</button>
+			<button onClick={appendTask}>+</button>
 		</div>
 	);
 };

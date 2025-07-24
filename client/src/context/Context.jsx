@@ -1,17 +1,25 @@
-import { createContext, useCallback, useState } from "react";
-import axios from "axios";
+import { createContext, useCallback, useState } from 'react';
+import axios from 'axios';
+
 export const Context = createContext();
-const path = 'https://to-do-react-m3fc.onrender.com/task/'
+const taskPath = 'https://to-do-react-m3fc.onrender.com/task/';
+const userPath = 'http://localhost:8080/user';
 
 export const ContextProvider = (props) => {
-    const [tasks, setTasks] = useState([]);
-    const [newTask, setNewTask] = useState('');
+	const [tasks, setTasks] = useState([]);
+	const [newTask, setNewTask] = useState('');
 	const [loading, setLoading] = useState('');
 	const [serverOff, setServerOff] = useState(false);
+	const [user, setUser] = useState('');
+	const [password, setPassword] = useState('');
+	const [userId, setUserId] = useState();
+	const [isVerificationError, setIsVerificationError] =
+		useState(false);
+	const [displayName, setDisplayName] = useState("");
 
-    const getTasksFromDB = useCallback(() => {
+	const getTasksFromDB = useCallback(() => {
 		axios
-			.get(path)
+			.get(taskPath)
 			.then((res) => {
 				let taskList = res.data.map((task) => ({
 					text: task.taskName,
@@ -26,14 +34,13 @@ export const ContextProvider = (props) => {
 					'error fetching data from database',
 					err
 				);
-				setServerOff(true)
+				setServerOff(true);
 			});
 	}, []);
 
-
-    const appendTask = async () => {
+	const appendTask = async () => {
 		if (newTask.trim() !== '') {
-			let data = { text: newTask.trim(), completed: false };
+			let data = { text: `${newTask.trim()} - ${displayName}`, completed: false };
 			let _id = await addTaskToDB(data);
 			setTasks((prev) => [...prev, { ...data, _id }]);
 			setNewTask('');
@@ -41,16 +48,16 @@ export const ContextProvider = (props) => {
 	};
 
 	const addTaskToDB = async (data) => {
-		let res = await axios.post(path, {
+		let res = await axios.post(taskPath, {
 			taskName: data.text,
 		});
 		return res.data.insertedId;
 	};
 
-    const completeTask = async (index, task) => {
+	const completeTask = async (index, task) => {
 		try {
 			// Send update to backend
-			await axios.patch(`${path}${task._id}`, {
+			await axios.patch(`${taskPath}${task._id}`, {
 				isCompleted: !task.completed,
 			});
 
@@ -68,13 +75,12 @@ export const ContextProvider = (props) => {
 		}
 	};
 
-
-   const removeTask = async (task, index) => {
+	const removeTask = async (task, index) => {
 		try {
 			setLoading(task._id);
 
 			// Wait for the task to be deleted in the DB first
-			await axios.delete(`${path}${task._id}`);
+			await axios.delete(`${taskPath}${task._id}`);
 
 			// After deletion succeeds, update local state
 			setTasks((prev) => {
@@ -87,27 +93,54 @@ export const ContextProvider = (props) => {
 		} finally {
 			setLoading('');
 		}
-   };
+	};
 
+	const userAuth = async (user, password) => {
+		let req = {
+			params: {
+				user,
+				password,
+			},
+		};
+		try {
+			let res = await axios.get(userPath, req);
+			setPassword('');
+			setUserId(res.data._id);
+			setDisplayName(res.data.display);
+			return true;
+		} catch {
+			console.log('error verifying user');
+			setIsVerificationError(true);
+			return false;
+		}
+	};
 
-    
-    const contextValue = {
+	const contextValue = {
 		tasks,
 		setTasks,
 		appendTask,
 		addTaskToDB,
 		getTasksFromDB,
-        removeTask,
-        newTask,
-        setNewTask,
-        completeTask,
+		removeTask,
+		newTask,
+		setNewTask,
+		completeTask,
 		loading,
 		setLoading,
 		serverOff,
+		user,
+		setUser,
+		password,
+		setPassword,
+		userAuth,
+		userId,
+		setUserId,
+		isVerificationError,
+		displayName,
 	};
-    return (
+	return (
 		<Context.Provider value={contextValue}>
 			{props.children}
 		</Context.Provider>
 	);
-}
+};
