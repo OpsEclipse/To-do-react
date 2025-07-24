@@ -12,6 +12,11 @@ export const Task = () => {
 
 	useEffect(() => {
 		getTasksFromDB();
+	}, [])
+
+	useEffect(() => {
+		let interval = setInterval(() => getTasksFromDB(), 3000);
+		return () => clearInterval(interval);
 	}, [getTasksFromDB]);
 
 	return (

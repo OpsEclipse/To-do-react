@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState } from 'react';
+import { createContext, useCallback, useState, useEffect } from 'react';
 import axios from 'axios';
 
 export const Context = createContext();
@@ -16,6 +16,7 @@ export const ContextProvider = (props) => {
 	const [isVerificationError, setIsVerificationError] =
 		useState(false);
 	const [displayName, setDisplayName] = useState("");
+
 
 	const getTasksFromDB = useCallback(() => {
 		axios
