@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const Context = createContext();
 const taskPath = 'https://to-do-react-m3fc.onrender.com/task/';
-const userPath = 'http://localhost:8080/user';
+const userPath = 'https://to-do-react-m3fc.onrender.com/user/';
 
 export const ContextProvider = (props) => {
 	const [tasks, setTasks] = useState([]);
