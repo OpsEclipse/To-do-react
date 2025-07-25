@@ -6,6 +6,7 @@ import { AddTaskSec } from '../components/AddTask.jsx';
 import { Footer } from '../components/Footer.jsx';
 import { useEffect } from 'react';
 import { Context } from '../context/Context.jsx';
+import { Socket } from '../socket/Socket.jsx';
 
 export const Task = () => {
 	const { getTasksFromDB, serverOff } = useContext(Context);
@@ -13,11 +14,6 @@ export const Task = () => {
 	useEffect(() => {
 		getTasksFromDB();
 	}, [])
-
-	useEffect(() => {
-		let interval = setInterval(() => getTasksFromDB(), 3000);
-		return () => clearInterval(interval);
-	}, [getTasksFromDB]);
 
 	return (
 		<main>
@@ -48,6 +44,7 @@ export const Task = () => {
 
 				<Footer />
 			</div>
+			<Socket />
 		</main>
 	);
 };

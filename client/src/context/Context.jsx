@@ -1,9 +1,16 @@
-import { createContext, useCallback, useState, useEffect } from 'react';
+import {
+	createContext,
+	useCallback,
+	useState,
+} from 'react';
 import axios from 'axios';
+import socket from '../socket/Socket';
 
 export const Context = createContext();
 const taskPath = 'https://to-do-react-m3fc.onrender.com/task/';
 const userPath = 'https://to-do-react-m3fc.onrender.com/user/';
+//const devTaskPath = 'http://localhost:8080/task/';
+//const devUserPath = 'http://localhost:8080/user/';
 
 export const ContextProvider = (props) => {
 	const [tasks, setTasks] = useState([]);
@@ -15,8 +22,7 @@ export const ContextProvider = (props) => {
 	const [userId, setUserId] = useState();
 	const [isVerificationError, setIsVerificationError] =
 		useState(false);
-	const [displayName, setDisplayName] = useState("");
-
+	const [displayName, setDisplayName] = useState('');
 
 	const getTasksFromDB = useCallback(() => {
 		axios
@@ -41,10 +47,18 @@ export const ContextProvider = (props) => {
 
 	const appendTask = async () => {
 		if (newTask.trim() !== '') {
-			let data = { text: `${newTask.trim()} - ${displayName}`, completed: false };
+			let data = {
+				text: `${newTask.trim()} - ${displayName}`,
+				completed: false,
+			};
 			let _id = await addTaskToDB(data);
+
+			socket.emit('taskAdded', { data, _id });
 			setTasks((prev) => [...prev, { ...data, _id }]);
 			setNewTask('');
+			return () => {
+				socket.off('taskAdded');
+			};
 		}
 	};
 
@@ -63,6 +77,8 @@ export const ContextProvider = (props) => {
 			});
 
 			// Once backend confirms, update local state
+			socket.emit('completeTask', index);
+
 			setTasks((prev) => {
 				const newTasks = [...prev];
 				newTasks[index] = {
@@ -84,6 +100,8 @@ export const ContextProvider = (props) => {
 			await axios.delete(`${taskPath}${task._id}`);
 
 			// After deletion succeeds, update local state
+			socket.emit('deleteTask', index);
+
 			setTasks((prev) => {
 				const newTasks = [...prev];
 				newTasks.splice(index, 1);
