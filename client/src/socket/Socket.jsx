@@ -2,7 +2,7 @@ import { io } from 'socket.io-client';
 import { useContext, useEffect } from 'react';
 import { Context } from '../context/Context';
 
-const socket = io('http://localhost:8080');
+const socket = io('https://to-do-react-m3fc.onrender.com');
 export const Socket = () => {
     const {setNewTask, setTasks} = useContext(Context);
     useEffect(() => {
