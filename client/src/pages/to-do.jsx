@@ -9,7 +9,8 @@ import { Context } from '../context/Context.jsx';
 import { Socket } from '../socket/Socket.jsx';
 
 export const Task = () => {
-	const { getTasksFromDB, serverOff } = useContext(Context);
+	const { getTasksFromDB, serverOff, displayName } =
+		useContext(Context);
 
 	useEffect(() => {
 		getTasksFromDB();
@@ -17,13 +18,8 @@ export const Task = () => {
 
 	return (
 		<main>
+			<h1 className='title'>{`Welcome ${displayName}!`}</h1>
 			<div className="app">
-				<button
-					style={{ width: 'fit-content', margin: '5px' }}
-					onClick={getTasksFromDB}
-				>
-					Restart
-				</button>
 				<div className="topHalf">
 					<DateDisplay />
 					<div
