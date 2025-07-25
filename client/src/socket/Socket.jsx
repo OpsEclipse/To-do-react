@@ -35,3 +35,6 @@ export const Socket = () => {
 	});
     return null
 }
+
+
+export default socket;
