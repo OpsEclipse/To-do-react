@@ -20,23 +20,29 @@ route.get('/', async (req, res) => {
 });
 
 route.post('/', async (req, res) => {
-	let collection = await db.collection('users');
-	const { user, password, display, role } = req.body;
-	let userInfo = {
-		user,
-		password: await hashPassword(password),
-		display,
-		role: role || 'user',
-	};
-	let dupe = await collection.findOne({ user });
+	try{
+		let collection = await db.collection('users');
+		const { user, password, display, role } = req.body;
+		let userInfo = {
+			user,
+			password: await hashPassword(password),
+			display: display || user,
+			role: role || 'user',
+		};
+		const dupe = await collection.findOne({ user });
+		if (dupe) {
+			return res
+				.status(409)
+				.json({ message: 'Username already exists.' }); // 409 = Conflict
+		}
 
-	if (!dupe) {
 		let results = await collection.insertOne(userInfo);
 		res.status(201).send(results);
 	}
-	else{
-		res.status(404);
+	catch{
+		res.status(500).send("server error");
 	}
+	
 	
 });
 

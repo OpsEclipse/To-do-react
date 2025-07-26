@@ -1,12 +1,13 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { LoginHeading } from '../components/LoginHeading';
 import { LoginInput } from '../components/LoginInput';
 import { Submit } from '../components/Submit';
 import { Context } from '../context/Context';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Login = () => {
-	const { setUser, setPassword, userAuth, user, password } =
+	const { setUser, setPassword, userAuth, user, password, setIsVerificationError } =
 		useContext(Context);
     const navigate = useNavigate();
 	const handleUserChange = (e) => {
@@ -17,10 +18,13 @@ export const Login = () => {
 		e.preventDefault();
 		setPassword(e.target.value);
 	};
+    useEffect(() => {
+        setIsVerificationError(false);
+    }, [])
 	return (
 		<div className="login app">
 			<div className="login-container">
-				<LoginHeading />
+				<LoginHeading text="Login" />
 				<LoginInput
 					placeholder="Username"
 					handleChange={(e) => handleUserChange(e)}
@@ -34,9 +38,10 @@ export const Login = () => {
 					type="password"
 				/>
 				<Submit
+					verifyErrorText="login"
 					handleClick={async () => {
 						let success = await userAuth(user, password);
-                        if (success) {
+						if (success) {
 							navigate('/app');
 						}
 					}}
@@ -44,8 +49,8 @@ export const Login = () => {
 				<p>
 					Don't have an account?{' '}
 					<span style={{ textDecoration: 'underline' }}>
-						Sign Up
-					</span>
+						<Link to={'/signup'}>Sign Up</Link>
+					</span>{' '}
 				</p>
 			</div>
 		</div>

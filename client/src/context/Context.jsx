@@ -23,6 +23,7 @@ export const ContextProvider = (props) => {
 	const [isVerificationError, setIsVerificationError] =
 		useState(false);
 	const [displayName, setDisplayName] = useState('');
+	const [mismatch, setMismatch] = useState(false);
 
 	const getTasksFromDB = useCallback(() => {
 		axios
@@ -114,7 +115,7 @@ export const ContextProvider = (props) => {
 		}
 	};
 
-	const userAuth = async (user, password) => {
+	const userAuth = async () => {
 		let req = {
 			params: {
 				user,
@@ -133,6 +134,24 @@ export const ContextProvider = (props) => {
 			return false;
 		}
 	};
+
+	const postUser = async () => {
+		let req = {
+			user,
+			password,
+			display:displayName,
+		}
+		try{
+			let res = await axios.post(userPath, req);
+			setUserId(res.data._id);
+			return true;
+		}
+		catch{
+			console.log('error verifying user');
+			setIsVerificationError(true);
+			return false;
+		}
+	}
 
 	const contextValue = {
 		tasks,
@@ -155,7 +174,12 @@ export const ContextProvider = (props) => {
 		userId,
 		setUserId,
 		isVerificationError,
+		setIsVerificationError,
 		displayName,
+		setDisplayName,
+		mismatch,
+		setMismatch,
+		postUser,
 	};
 	return (
 		<Context.Provider value={contextValue}>

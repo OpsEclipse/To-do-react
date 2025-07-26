@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from './context/Context';
+import { Signup } from './pages/signup';
 
 function App() {
 	const { user } = useContext(Context);
@@ -20,6 +21,7 @@ function App() {
 					element={<Navigate to="/login" replace />}
 				/>
 				<Route path="/login" element={<Login />} />
+				<Route path="/signup" element={<Signup />} />
 				{user !== '' ? (
 					<Route path="/app" element={<Task />} />
 				) : (
