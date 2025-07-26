@@ -3,7 +3,7 @@ import '../index.css';
 import { useContext } from 'react';
 
 export const AddTaskSec = () => {
-	const { newTask, setNewTask, appendTask, displayName } =
+	const { newTask, setNewTask, appendTask } =
 		useContext(Context);
 
 	return (

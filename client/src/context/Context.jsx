@@ -144,6 +144,9 @@ export const ContextProvider = (props) => {
 		try{
 			let res = await axios.post(userPath, req);
 			setUserId(res.data._id);
+			if (displayName === ''){
+				setDisplayName(user);
+			}
 			return true;
 		}
 		catch{
