@@ -3,7 +3,7 @@ import { Context } from '../context/Context';
 import { Link } from 'react-router-dom';
 
 export const Submit = ({ handleClick, verifyErrorText }) => {
-	const { isVerificationError, mismatch, page } = useContext(Context);
+	const { isVerificationError, mismatch } = useContext(Context);
 	return (
 		<div
 			style={{

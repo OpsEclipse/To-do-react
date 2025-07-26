@@ -17,10 +17,8 @@ export const Signup = () => {
 		setDisplayName,
 		setMismatch,
         setIsVerificationError,
-        confirmPass,
-        setConfirmPass,
 	} = useContext(Context);
-	
+	const [confirmPass, setConfirmPass] = useState('');
 	const navigate = useNavigate();
 	const handleUserChange = (e) => {
 		e.preventDefault();
@@ -40,7 +38,7 @@ export const Signup = () => {
 	};
 	useEffect(() => {
 		setIsVerificationError(false);
-        setConfirmPass(false);
+        setMismatch(false);
 	}, []);
 	return (
 		<div className="login app">
