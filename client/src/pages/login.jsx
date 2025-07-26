@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 export const Login = () => {
-	const { setUser, setPassword, userAuth, user, password, setIsVerificationError } =
+	const { setUser, setPassword, userAuth, user, password, setIsVerificationError, setConfirmPass } =
 		useContext(Context);
     const navigate = useNavigate();
 	const handleUserChange = (e) => {
@@ -20,6 +20,7 @@ export const Login = () => {
 	};
     useEffect(() => {
         setIsVerificationError(false);
+        setConfirmPass(false);
     }, [])
 	return (
 		<div className="login app">

@@ -24,6 +24,7 @@ export const ContextProvider = (props) => {
 		useState(false);
 	const [displayName, setDisplayName] = useState('');
 	const [mismatch, setMismatch] = useState(false);
+	const [confirmPass, setConfirmPass] = useState('');
 
 	const getTasksFromDB = useCallback(() => {
 		axios
@@ -183,6 +184,8 @@ export const ContextProvider = (props) => {
 		mismatch,
 		setMismatch,
 		postUser,
+		confirmPass,
+		setConfirmPass,
 	};
 	return (
 		<Context.Provider value={contextValue}>
